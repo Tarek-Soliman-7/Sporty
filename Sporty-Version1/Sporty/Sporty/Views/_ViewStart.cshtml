@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Identity
+@{
+	if ( User.IsInRole("ClubAdmin"))
+	{
+		Layout = "_AdminLayout";
+	}
+	else if (User.IsInRole("User"))
+	{
+		Layout = "_UserLayout";
+	}
+	else
+	{
+		Layout = "_DefLayout";
+	}
+}

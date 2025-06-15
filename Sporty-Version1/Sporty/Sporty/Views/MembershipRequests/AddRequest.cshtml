@@ -1,0 +1,157 @@
+﻿@using Sporty.ViewModels;
+@model MembershipRequestViewModel;
+@{
+    ViewData["Title"] = "Adding Membership Request";
+}
+
+<style>
+    #typeDetails ul {
+        margin-top: 10px;
+    }
+
+        #typeDetails ul li {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+            #typeDetails ul li:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+</style>
+
+@if (!ViewContext.HttpContext.Request.Method.Equals("GET", StringComparison.OrdinalIgnoreCase))
+{
+    <div asp-validation-summary="All" class="text-danger"></div>
+}
+
+<h4>Membership Request</h4>
+
+<form asp-action="AddRequest" enctype="multipart/form-data" method="post">
+    <input type="hidden" asp-for="@Model.ClubId" />
+    <input type="hidden" asp-for="@Model.UserId" />
+    <!-- Select Branch -->
+    <div class="mb-3">
+        <label for="branchSelect" class="form-label">Select Branch</label>
+        <select id="branchSelect" name="BranchId" class="form-select" required>
+            <option value="" disabled selected>-- Select Branch --</option>
+            @foreach (var branch in Model.Branches)
+            {
+                <option value="@branch.Id">@branch.Name</option>
+            }
+        </select>
+    </div>
+
+    <!-- Select Membership Type -->
+    <div class="mb-3">
+        <label for="typeSelect" class="form-label">Select Membership Type</label>
+        <select id="typeSelect" asp-for="@Model.MembershipTypeId" class="form-select" disabled required>
+            <option value="" disabled selected>-- Select Membership Type --</option>
+        </select>
+    </div>
+
+    <!-- Show Membership Type Details -->
+    <div id="typeDetails" class="alert alert-info d-none">
+        <strong>Membership Type Details:</strong>
+        <p id="detailsContent"></p>
+    </div>
+
+    <hr />
+
+    <!-- File Uploads -->
+    <h5>Upload Required Documents</h5>
+
+    @* Educational Certificates *@
+    <div class="mb-3">
+        <label>Educational Certificate (Applicant)</label>
+        <input class="form-control" type="file" name="EducationalCertificateApplicant" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Submit Membership Request</button>
+</form>
+
+@section Scripts {
+    <script>
+              document.addEventListener('DOMContentLoaded', function() {
+            const branchSelect = document.getElementById('branchSelect');
+            const typeSelect = document.getElementById('typeSelect');
+            const typeDetailsDiv = document.getElementById('typeDetails');
+            const detailsContent = document.getElementById('detailsContent');
+
+            // Load membership types when branch changes
+            branchSelect.addEventListener('change', async function() {
+                const branchId = this.value;
+
+                if (branchId) {
+                    try {
+                        const response = await fetch(`/membershiprequests/GetMembershipTypes?branchId=${branchId}`);
+                        if (!response.ok) throw new Error('Network response was not ok');
+
+                        const membershipTypes = await response.json();
+
+                        // Clear and populate type dropdown
+                        typeSelect.innerHTML = '<option value="">-- Select Membership Type --</option>';
+                        membershipTypes.forEach(type => {
+                            const option = document.createElement('option');
+                            option.value = type.id;
+                            option.textContent = type.name;
+                            // Store all details as JSON in data attribute
+                            option.dataset.details = JSON.stringify({
+                                description: type.description,
+                                price: type.price,
+                                duration: type.durationYears,
+                                maxFamily: type.maxFamilyMembers,
+                                available: type.availability
+                            });
+                            typeSelect.appendChild(option);
+                        });
+                        typeSelect.disabled = false;
+
+                        // Hide details if they were showing
+                        typeDetailsDiv.classList.add('d-none');
+                    } catch (error) {
+                        console.error('Error loading membership types:', error);
+                        typeSelect.innerHTML = '<option value="">-- Error Loading Types --</option>';
+                    }
+                } else {
+                    typeSelect.innerHTML = '<option value="">-- Select Branch First --</option>';
+                    typeSelect.disabled = true;
+                    typeDetailsDiv.classList.add('d-none');
+                }
+            });
+
+            // Show details when membership type is selected
+            typeSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+
+                if (this.value) {
+                    const details = JSON.parse(selectedOption.dataset.details);
+
+                    // Format the details as HTML
+                    detailsContent.innerHTML = `
+                        <ul class="list-unstyled">
+                            <li><strong>Name:</strong> ${selectedOption.text}</li>
+                            <li><strong>Description:</strong> ${details.description}</li>
+                            <li><strong>Price:</strong> $${details.price.toLocaleString()}</li>
+                            <li><strong>Duration:</strong> ${details.duration} year(s)</li>
+                            <li><strong>Max Family Members:</strong> ${details.maxFamily}</li>
+                            <li><strong>Status:</strong>
+                                <span class="badge ${details.available ? 'bg-success' : 'bg-secondary'}">
+                                    ${details.available ? 'Available' : 'Not Available'}
+                                </span>
+                            </li>
+                        </ul>
+                    `;
+
+                    // Show the details div
+                    typeDetailsDiv.classList.remove('d-none');
+                } else {
+                    // Hide if no type selected
+                    typeDetailsDiv.classList.add('d-none');
+                }
+            });
+        });
+
+    </script>
+}

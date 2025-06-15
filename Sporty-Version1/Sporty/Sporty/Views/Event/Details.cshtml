@@ -1,0 +1,83 @@
+﻿@using Sporty.ViewModels
+@model EventViewModel
+@{
+    ViewData["Title"] = "Details";
+    var branchSelectList = ViewData["branches"] as IEnumerable<Branch> ?? new List<Branch>();
+    var clubSelectList = ViewData["clubs"] as IEnumerable<Club> ?? new List<Club>();
+
+    var branches = new SelectList(branchSelectList, "Id", "Name");
+    var clubs = new SelectList(clubSelectList, "Id", "Name");
+}
+
+<div class="container mt-5">
+    <div class="card shadow p-4" style="border-radius: 20px;">
+        <h3 class="mb-4 fw-bold text-primary">Create New Event</h3>
+        <form  enctype="multipart/form-data" >
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">Title</label>
+                <input type="text" class="form-control" asp-for="Title" readonly>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Description</label>
+                <textarea class="form-control" asp-for="Description" rows="3" readonly></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Date" class="form-label">Date</label>
+                <input type="date" class="form-control" asp-for="Date" readonly>
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Club</label>
+                <p class="form-control-plaintext">@clubs.FirstOrDefault(c => c.Value == Model.ClubId.ToString())?.Text</p>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Branch</label>
+                <p class="form-control-plaintext">@branches.FirstOrDefault(b => b.Value == Model.BranchId.ToString())?.Text</p>
+            </div>
+
+            <<div class="mb-3">
+                <label asp-for="Image" class="form-label">Image</label>
+                <input type="file" class="form-control" asp-for="Image">
+            </div>
+
+
+            <div class="text-end">
+                <a asp-action="Update" asp-route-id="@Model.id" value="" class="btn btn-primary px-4">Edite</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.id">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="deleteModal-@Model.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Event</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are You Sure to Delete this Event?
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-action="Delete" asp-controller="Event" asp-route-id="@Model.id" class="mt-4">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/Ajax.js"></script>
+}

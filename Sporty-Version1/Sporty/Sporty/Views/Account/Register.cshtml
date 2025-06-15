@@ -1,0 +1,269 @@
+﻿@using Sporty.ViewModels;
+@model RegisterViewModel;
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap "rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Sign Up Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Nunito", sans-serif;
+            user-select: none;
+        }
+
+        .main_container {
+            display: flex;
+        }
+
+        .main_container .image {
+                flex: 7.5;
+            }
+
+                .main_container .image img {
+                    object-fit: cover;
+                    object-position: right;
+                    height: 100%;
+                    width: 100%;
+                }
+
+            .main_container .signUp_fields {
+                flex: 2.5;
+                display: flex;
+                flex-direction: column;
+                background-color: #f5f5f5;
+                padding: 50px 40px;
+            }
+
+            .main_container .signUp_fields h3 {
+                    font-size: 22px;
+                }
+
+        .main_container .signUp_fields label {
+                    margin-top: 15px;
+                    margin-bottom: 10px;
+                    cursor: pointer;
+                }
+
+                .main_container .signUp_fields .input_field {
+                    width: 100%;
+                    padding: 8px 16px;
+                    border-radius: 6px;
+                    border: 1px solid #00000014;
+                    background-color: #8080801a;
+                    outline: none;
+                    font-size: 16px;
+                }
+
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+            .password-container input {
+                padding-right: 80px;
+            }
+
+            .password-container button {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 18px;
+                padding: 0 8px;
+            }
+
+        .toggle-btn {
+            right: 40px;
+            color: #000000ad;
+        }
+
+        .clear-btn {
+            right: 5px;
+            color: #000000ad;
+        }
+
+        .signUp_fields #submit {
+            background-color: #2962ff;
+            font-size: 16px;
+            color: white;
+            margin-top: 25px;
+            width: 100%;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+       
+
+        .signUp_fields .login {
+            margin-top: 20px;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .login a {
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+            .login a:hover {
+                text-decoration: underline;
+            }
+
+        @@media (max-width: 768px) {
+            .main_container {
+            flex-direction: column;
+            overflow: auto;
+        }
+
+            .main_container .image {
+            flex: none;
+            height: 250px;
+            width: 100%;
+        }
+
+            .main_container .signUp_fields {
+            flex: none;
+            width: 100%;
+            padding: 30px 20px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="main_container">
+        <div class="image">
+            <img src="~/Images/3728eea1c7924c8d4db31eb460b0b7b9.png" alt="image" />
+        </div>
+        <div class="signUp_fields">
+          <form  asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             @Html.AntiForgeryToken()
+            <h3>Create New Account</h3>
+                <span asp-validation-for="FullName" class="text-danger d-block"></span>
+            <label asp-for="FullName">Full Name</label>
+            <input class="input_field" asp-for="FullName" id="name" placeholder="Tarek Ahmed" />
+
+                <span asp-validation-for="Email" class="text-danger d-block"></span>
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="input_field" id="email" placeholder="designer@example.com" />
+
+                <span asp-validation-for="PhoneNumber" class="text-danger d-block"></span>
+            <label asp-for="PhoneNumber">Phone Number</label>
+            <input asp-for="PhoneNumber" class="input_field"  type="tel" id="phone" placeholder="+201234567890" />
+
+                <span asp-validation-for="NationalId" class="text-danger d-block"></span>
+            <label asp-for="NationalId">National ID</label>
+            <input asp-for="NationalId" class="input_field" id="nationalid" placeholder="12345678900000" pattern="[A-Z0-9]{8,20}" />
+
+                <span asp-validation-for="DateOfBirth" class="text-danger d-block"></span>
+            <label asp-for="DateOfBirth">Date of Birth</label>
+            <input asp-for="DateOfBirth" class="input_field form-control" type="date"/>
+            
+
+            <label asp-for="Gender">Gender</label>
+                <select asp-for="Gender" class="input_field" asp-items="Html.GetEnumSelectList<Sporty.Enums.Gender>()" class="form-control">
+                    <option value="">-- Select Gender --</option>
+            </select>
+                <span asp-validation-for="Gender" class="text-danger d-block"></span>
+
+
+                <span asp-validation-for="Password" class="text-danger d-block"></span>
+                <ul>
+                    <li>Be at least 8 characters long</li>
+                    <li>Contain at least one uppercase letter</li>
+                    <li>Contain at least one lowercase letter</li>
+                    <li>Contain at least one digit</li>
+                </ul>
+            <label asp-for="Password">Password</label>
+            <div class="password-container">
+                    <input asp-for="Password" class="input_field" id="password" placeholder="Password" />
+
+                    <button class="toggle-btn" onclick="togglePassword('password','toggleIcon')" type="button">
+                    <i id="toggleIcon" class="fa-solid fa-eye"></i>
+                </button>
+                <button class="clear-btn" onclick="clearPassword('password')" type="button">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            
+            <span asp-validation-for="ConfirmPassword" class="text-danger d-block"></span>
+            <label asp-for="ConfirmPassword">Confirm Password</label>
+            <div class="password-container">
+                    <input asp-for="ConfirmPassword" class="input_field" id="confirmpassword" placeholder="Confirm Password" />
+
+                    <button class="toggle-btn" onclick="togglePassword('confirmpassword','confirmtoggleIcon')" type="button">
+                    <i id="confirmtoggleIcon" class="fa-solid fa-eye"></i>
+                </button>
+                    <button class="clear-btn" onclick="clearPassword('confirmpassword')" type="button">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <input id="submit" type="submit" value="Register" />
+            
+            <div class="login">
+                <p>Already have An Account?</p>
+                <a asp-controller="Account" asp-action="Login" class="forgot-password">Login</a>
+            </div>
+
+            <div class="Home">
+                    <a asp-controller="Home" asp-action="Index">Home</a>
+            </div>
+
+            </form>
+        </div>
+        
+    </div>
+   
+    <script>
+        function togglePassword(id,toggleid) {
+          const pass = document.getElementById(id);
+          const icon = document.getElementById(toggleid);
+
+          if (pass.type === "password") {
+            pass.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+          } else {
+            pass.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+          }
+        }
+
+        function clearPassword(id) {
+          document.getElementById(id).value = "";
+        }
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,229 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "";
+}
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sporty - Official Website</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Sporty</div>
+            <div class="nav-links">
+                <a asp-asp-controller="Home" asp-action="Index" class="active">Home</a>
+                <a href="#">Clubs</a>
+                <a href="#">Sports</a>
+                <a href="#">News</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Policy</a>
+                <a href="#">Terms</a>
+            </div>
+            <div class="auth-buttons">
+
+                
+                    <a asp-controller="Account" asp-action="Login" class="login-btn">Login</a>
+                
+                <button class="member-btn">Become A Member</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>WELCOME<br>TO SPORTY<br>OFFICIAL<br>WEBSITE</h1>
+            </div>
+        </section>
+
+        <section class="sports-section">
+            <h2>Sports</h2>
+            <div class="sports-grid">
+                <div class="sport-card football">
+                    <div class="sport-content">
+                        <h3>FOOTBALL</h3>
+                    </div>
+                </div>
+                <div class="sport-card basketball">
+                    <div class="sport-content">
+                        <h3>BASKETBALL</h3>
+                    </div>
+                </div>
+                <div class="sport-card swimming">
+                    <div class="sport-content">
+                        <h3>SWIMMING</h3>
+                    </div>
+                </div>
+                <div class="sport-card tennis">
+                    <div class="sport-content">
+                        <h3>TENNIS</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-grid">
+            <div class="top-section">
+                <!-- Trending News Section -->
+                <section class="trending-section">
+                    <h2>Trending News in Sporty</h2>
+                    <div class="news-list">
+                        <div class="news-item">
+                            <img src="~/Images/sports/image.png" alt="Premier League News" class="news-image">
+                            <div class="news-content">
+                                <h3>Enjoy the 2025 Premier League matches!</h3>
+                                <p>Watch the 2025 Premier League matches at Sporty and be a part of all the action! 🏆</p>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <img src="~/Images/sports/imaget.png" alt="Premier League Players" class="news-image">
+                            <div class="news-content">
+                                <h3>Enjoy the 2025 LA LIGA matches!</h3>
+                                <p>Watch the 2025 LA LIGA matches at Sporty and be a part of all the action! 🏆</p>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <img src="~/Images/sports/race-hose 1.png" alt="Football Players" class="news-image">
+                            <div class="news-content">
+                                <h3>Enjoy the 2025 Serie A matches!</h3>
+                                <p>Watch the 2025 Serie A matches at Sporty and be a part of all the action! 🏆</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- E-Sports Banner -->
+                <div class="esports-banner">
+                    <div class="badge">E-Sports</div>
+                    <div class="banner-content">
+                        <p class="date">18 June 2025</p>
+                        <h2>E-SPORTS ACADEMY OPENING IN WADI DEGLA E-SPORTS ACADEMY 🤩👇</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sports Articles Section -->
+            <section class="articles-section">
+                <h2>Sports Article</h2>
+                <div class="articles-grid">
+                    <article class="article-card">
+                        <div class="article-image">
+                            <img src="~/Images/sports/articleimage1.png" alt="Luka Modric">
+                            <span class="tag">Football</span>
+                        </div>
+                        <div class="article-content">
+                            <div class="author">
+                                <img src="~/Images/sports/articleinerimage1.png" alt="Tarek Ahmed" class="author-img">
+                                <span class="author-name">Tarek Ahmed</span>
+                            </div>
+                            <h3>Minority Owner Luka Modric Can Inspire A Fresh Chapter At Swansea City</h3>
+                            <p>The Madrid legend won't be collecting another Champions League trophy this season after Real Madrid's defeat to Arsenal...</p>
+                            <div class="article-footer">
+                                <span class="article-date">17 June 2025</span>
+                                <div class="article-actions">
+                                    <button class="share-btn">Share</button>
+                                    <button class="more-btn">More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <div class="article-image">
+                            <img src="~/Images/sports/articleimage2.png" alt="Thomas Müller">
+                            <span class="tag">Football</span>
+                        </div>
+                        <div class="article-content">
+                            <div class="author">
+                                <img src="~/Images/sports/articleinerimage2.png" alt="Tarek Ahmed" class="author-img">
+                                <span class="author-name">Tarek Ahmed</span>
+                            </div>
+                            <h3>After 163 Games, Inter Milan End Thomas Müller's Champions League Career</h3>
+                            <p>Bayern Munich pushed Inter Milan all the way but ultimately couldn't overcome a 1-0 deficit from the first leg...</p>
+                            <div class="article-footer">
+                                <span class="article-date">17 June 2025</span>
+                                <div class="article-actions">
+                                    <button class="share-btn">Share</button>
+                                    <button class="more-btn">More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <div class="article-image">
+                            <img src="~/Images/sports/articleimage3.png" alt="Tyrese Haliburton">
+                            <span class="tag">Basketball</span>
+                        </div>
+                        <div class="article-content">
+                            <div class="author">
+                                <img src="~/Images/sports/articleinerimage3.png" alt="Tarek Ahmed" class="author-img">
+                                <span class="author-name">Tarek Ahmed</span>
+                            </div>
+                            <h3>Milwaukee Bucks Must Keep Tyrese Haliburton Out Of The Paint</h3>
+                            <p>Tyrese Haliburton has been a thorn in Milwaukee's side, but the Bucks need to keep him out of the paint in their playoff series.</p>
+                            <div class="article-footer">
+                                <span class="article-date">17 June 2025</span>
+                                <div class="article-actions">
+                                    <button class="share-btn">Share</button>
+                                    <button class="more-btn">More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">Sporty</div>
+                <p>Wadi Degla clubs offer a wide variety of sports through 20 different academies, all applying the latest sports curriculum and led by professional coaches.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Templates</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Free resources</a></li>
+                    <li><a href="#">Contracts</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Join Our Newsletter</h3>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email address">
+                    <button class="subscribe-btn">Subscribe</button>
+                </div>
+                <p>Weekly updates will be sent to your email address.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright @@Tarek Ahmed 2025. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Sporty.Models.Club>
+
+<form asp-controller="MembershipRequests" asp-action="AddRequest" method="get">
+    <div class="form-group">
+        <label for="clubSelect">Select Club</label>
+        <select name="ClubId" class="form-control" id="clubSelect">
+            <option value="">-- Select Club --</option>
+            @foreach (var club in Model)
+            {
+                <option value="@club.Id">@club.Name</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+

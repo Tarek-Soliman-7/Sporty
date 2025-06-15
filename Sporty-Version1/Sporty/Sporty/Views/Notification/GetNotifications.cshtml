@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Notification>
+
+<h2>Read Notifications</h2>
+
+@if (!Model.Any())
+{
+    <p>No read notifications.</p>
+}
+else
+{
+    <ul>
+        @foreach (var notification in Model)
+        {
+            <li>
+                <strong>@notification.Title</strong><br />
+                @notification.Message <br />
+                <small>@notification.CreatedAt.ToString("g")</small>
+            </li>
+        }
+    </ul>
+}

@@ -1,0 +1,164 @@
+.side-bar{
+    padding: 10px;
+    width: 233px;
+    display:flex;
+    flex-direction: column;
+    
+}
+
+.separator{
+    background-color: #ddd;
+    height: 0.1px;
+    margin: 20px;
+    width: 220px;
+    opacity: 0.2;
+}
+
+.items{
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 10px;
+    
+}
+.items:hover {
+    background-color: #FFF;
+
+}
+
+
+.items:hover .description{
+    color: black;
+    font-weight: bold;
+}
+.description{
+    color: #90A4AE;
+    font-family: "Nunito", sans-serif;
+}
+
+.icon{
+    color: blue;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 15px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0px 5px 5px rgba(0,0,0,0.1);
+
+}
+.items:hover .icon{
+    background-color: blue;
+    color: #fff;
+}
+
+.help{
+    padding: 20px 10px;
+    width: 90%;
+    flex-direction: column;
+    margin-top: 30px;
+    background-color: #304FFE;
+    height: 180px;
+    border-radius: 15px;
+}
+.icon-h{
+    color: #304FFE;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-left: 5px;
+    margin-right: 20px;
+    border-radius: 30%;
+    font-size: 15px;
+    background-color: #fff;
+
+}
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border-color: white;
+    width: 100%;
+    height: 35px;
+    background-color: white;
+}
+
+.login-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    width:80px;
+    text-decoration: none;
+    border: 2px solid #2962FF;
+    background-color: transparent;
+    color: #2962FF;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 50px;
+    text-align:center;
+}
+
+    .login-btn:hover {
+        background-color: #2962FF;
+        color: white;
+    }
+
+.notification-wrapper {
+    position: relative;
+    cursor: pointer;
+    margin-top:50px;
+}
+
+.notification-bell {
+    position: relative;
+    color: #A0AEC0;
+    transition: color 0.3s ease;
+}
+
+    .notification-bell:hover {
+        color: #2D3748;
+    }
+
+    .notification-bell:active {
+        color: #2962FF;
+    }
+
+.bell-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: #2962FF;
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-weight: bold;
+    box-shadow: 0 0 0 2px white;
+    display: inline-block;
+}
+
+.notification-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+    .notification-item:hover {
+        background-color: #f3f3f3;
+    }
+
+

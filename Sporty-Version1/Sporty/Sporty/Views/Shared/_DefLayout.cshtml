@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sporty - Official Website</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Sporty</div>
+            <div class="nav-links">
+                <a asp-asp-controller="Home" asp-action="Index" class="active">Home</a>
+                <a href="#">Clubs</a>
+                <a href="#">Sports</a>
+                <a href="#">News</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Policy</a>
+                <a href="#">Terms</a>
+            </div>
+            <div class="auth-buttons">
+
+                <a asp-controller="Account" asp-action="Login" class="login-btn">Login</a>
+
+                <button class="member-btn">Become A Member</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+      @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">Sporty</div>
+                <p>Wadi Degla clubs offer a wide variety of sports through 20 different academies, all applying the latest sports curriculum and led by professional coaches.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Templates</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Free resources</a></li>
+                    <li><a href="#">Contracts</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Join Our Newsletter</h3>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email address">
+                    <button class="subscribe-btn">Subscribe</button>
+                </div>
+                <p>Weekly updates will be sent to your email address.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright @@Tarek Ahmed 2025. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html> 

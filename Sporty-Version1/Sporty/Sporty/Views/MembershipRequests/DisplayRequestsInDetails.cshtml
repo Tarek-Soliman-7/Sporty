@@ -1,0 +1,100 @@
+﻿@model Sporty.ViewModels.MembershipRequestUpdateViewModel
+
+@{
+    ViewData["Title"] = "Request Details";
+   MembershipRequests request = ViewBag.Request;
+}
+
+@{
+    
+}
+<h2>Request Details (ID: @Model.Id)</h2>
+
+<div>
+    <p><strong>User:</strong>@request.RequestingUser.FullName</p>
+    <p><strong>Branch:</strong> @request.Branch.Name</p>
+    <p><strong>Status:</strong> @request.Status</p>
+    <p><strong>Submitted On:</strong> @request.SubmissionDate.ToString("g")</p>
+    <p><strong>Interview Required:</strong> @(Model.InterviewRequired ? "Yes" : "No")</p>
+    <p><strong>Interview Date:</strong> @(Model.InterviewDate?.ToString("g") ?? "N/A")</p>
+</div>
+
+<h3>Documents</h3>
+@if (request.Documents != null && request.Documents.Any())
+{
+    <ul>
+        @foreach (var doc in request.Documents)
+        {
+            <li>
+                <strong>@doc.DocumentType:</strong>
+                <a href="@Url.Content($"~/uploads/membership_requests/{Model.Id}/{System.IO.Path.GetFileName(doc.FilePath)}")" target="_blank"> View Document</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No documents uploaded.</p>
+}
+
+<a asp-action="DisplayRequests" class="btn btn-secondary">Back to List</a>
+
+ @if (!ViewContext.HttpContext.Request.Method.Equals("GET", StringComparison.OrdinalIgnoreCase))
+ { 
+     <div asp-validation-summary="All" class="text-danger"></div> 
+ } 
+
+<form asp-action="TakeDecision" asp-route-Id="@Model.Id" method="post" style="display:inline">
+    
+
+
+    <div class="form-group">
+        <label asp-for="Notes">Admin Notes / Reject Reason</label>
+        <textarea asp-for="Notes" class="form-control" rows="4"></textarea>
+    </div>
+
+    <div class="form-group form-check">
+        <input type="checkbox" asp-for="InterviewRequired" class="form-check-input"/>
+        <label class="form-check-label" for="InterviewRequired">Interview Required</label>
+    </div>
+
+
+    <div class="form-group" id="InterviewDateContainer" style="display:none;">
+        <label asp-for="InterviewDate">Interview Date</label>
+        <input asp-for="InterviewDate" class="form-control" type="datetime-local" id="InterviewDate" />
+    </div>
+
+
+
+    @if (request.Status == Sporty.Enums.MembershipRequestStatus.Pending)
+    {
+        <button type="submit" name="Decision" value="3" class="btn btn-primary">Save</button>
+        <button type="submit" name="Decision" value="1" class="btn btn-success">Accept</button>
+        <button type="submit" name="Decision" value="2" class="btn btn-danger">Reject</button>
+    }
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const checkbox = document.getElementById("InterviewRequired");
+            const dateContainer = document.getElementById("InterviewDateContainer");
+
+            function toggleDateField() {
+                if (checkbox.checked) {
+                    dateContainer.style.display = "block";
+                } else {
+                    dateContainer.style.display = "none";
+                    document.getElementById("InterviewDate").value = ""; // Clear the date if unchecked
+                }
+            }
+
+            checkbox.addEventListener("change", toggleDateField);
+
+            // Run on load in case the checkbox is already checked (e.g., on edit)
+            toggleDateField();
+        });
+    </script>
+}
+

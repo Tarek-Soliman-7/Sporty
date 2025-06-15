@@ -1,0 +1,118 @@
+﻿ @using Microsoft.AspNetCore.Identity
+@model IEnumerable<Event>
+@{
+    ViewData["Title"] = "Create";
+    var clubSelectList = ViewData["clubs"] as IEnumerable<Club> ?? new List<Club>();
+
+    var clubs = new SelectList(clubSelectList, "Id", "Name");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Dashboard</title>
+    <link rel="stylesheet" href="~/css/Event.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <main class="main-content">
+            <header class="top-bar">
+                <h1 class="section-title">Events</h1>
+                <div class="search-user">
+                    <div class="search-box" style="margin-right: 30px;">
+                        <!-- زدت المسافة هنا -->
+                        <label class="form-label">Club</label>
+                        @Html.DropDownList(
+                                                   "clubId",
+                                                   clubs,
+                                                   "Select",
+                                                   new
+                                                   {
+                                                       @class = "form-select",
+                                                       @id = "ClubDropdown",
+                                                       onchange = "filterByClub()",
+                                                       style = "cursor: pointer;" 
+                                                   }
+                                                   )
+                    </div>
+                    <span class="user-icon">
+                        <img src="assets/icons/user.svg" width="20" height="20" alt="User" />
+                    </span>
+                    <span class="user-name">Tarek Ahmed</span>
+                    <span class="settings-icon">
+                        <img src="assets/icons/sittings.svg" width="20" height="20" alt="Settings" />
+                    </span>
+                    <span class="bell-icon">
+                        <img src="assets/icons/notefication.svg" width="20" height="20" alt="Notification" />
+                    </span>
+                </div>
+            </header>
+            <br />
+            @if (User.IsInRole("ClubAdmin"))
+            {
+                <a asp-action="Create" class="btn btn-outline-primary">Create</a>
+            }
+            <section class="events-section">
+                <div class="events-grid">
+                    <!-- Repeat this card 8 times -->
+                    @if(Model.Count()>0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="event-card">
+                                <img src="~/Image/@item.ImageName" alt="Event" class="event-img">
+                                <div class="event-info">
+                                    <span class="event-date">@item.Date</span>
+                                    <h2 class="event-title">@item.Title</h2>
+                                    <p class="event-desc">@item.Description</p>
+                                    @if (User.IsInRole("ClubAdmin"))
+                                    {
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Details</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Book" asp-controller="Booking" asp-route-id="@item.Id" class="btn btn-outline-primary">Booking</a>
+                                    }
+                                    <div class="event-avatars">
+                                        @* <img src="assets/images/avatar1.jpg" class="avatar" alt="Avatar 1" /> *@
+                                        @* <img src="assets/images/avatar2.jpg" class="avatar" alt="Avatar 2" /> *@
+                                        @* <img src="assets/images/avatar3.jpg" class="avatar" alt="Avatar 3" /> *@
+                                        @* <img src="assets/images/avatar4.jpg" class="avatar" alt="Avatar 4" /> *@
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-primary" role="alert">
+                            <h4>Table is Empty</h4>
+                        </div>
+                    }
+                     
+                    <!-- 7 more cards, only the button text changes for the first card -->
+                </div>
+
+                <div class="view-more-container">
+                    <button class="view-more-btn">&#9660; View More</button>
+                </div>
+            </section>
+            <footer class="footer">
+                <span>Blog</span>
+                <span>License</span>
+            </footer>
+        </main>
+    </div>
+</body>
+
+
+
+</html>
+
+@section Scripts {
+    <script src="~/js/Ajax.js"></script>
+}
+
+
+

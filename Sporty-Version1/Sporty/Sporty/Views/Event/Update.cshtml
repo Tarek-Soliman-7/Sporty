@@ -1,0 +1,62 @@
+﻿@using Sporty.ViewModels
+@model EventViewModel
+@{
+    ViewData["Title"] = "Update";
+    var branchSelectList = ViewData["branches"] as IEnumerable<Branch> ?? new List<Branch>();
+    var clubSelectList = ViewData["clubs"] as IEnumerable<Club> ?? new List<Club>();
+
+    var branches = new SelectList(branchSelectList, "Id", "Name");
+    var clubs = new SelectList(clubSelectList, "Id", "Name");
+}
+
+<div class="container mt-5">
+    <div class="card shadow p-4" style="border-radius: 20px;">
+        <h3 class="mb-4 fw-bold text-primary">Create New Event</h3>
+        <form asp-action="Update" enctype="multipart/form-data">
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">Title</label>
+                <input type="text" class="form-control" asp-for="Title">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Description</label>
+                <textarea class="form-control" asp-for="Description" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Date" class="form-label">Date</label>
+                <input type="date" class="form-control" asp-for="Date">
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Club</label>
+                @Html.DropDownListFor(model => model.ClubId, clubs, "Choose Club", new { @class = "form-select", @id = "ClubDropdown" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Branch</label>
+                @Html.DropDownListFor(model => model.BranchId, branches, "Choose Branch", new { @class = "form-select", @id = "BranchDropdown" })
+            </div>
+            <div class="mb-3">
+                <label asp-for="Image" class="form-label">Image</label>
+                <input type="file" class="form-control" asp-for="Image">
+            </div>
+
+            <input type="hidden" asp-for="ImageName" />
+
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary px-4">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/Ajax.js"></script>
+}

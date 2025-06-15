@@ -1,0 +1,46 @@
+﻿@model List<Sporty.Models.MembershipRequests>
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "Membership Requests";
+}
+
+<h1>Membership Requests</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Request ID</th>
+            <th>User</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>InterviewDate</th>
+            <th>Notes</th>
+            <th>DecisionDate</th>
+			@if (User.IsInRole("ClubAdmin"))
+            {
+				<th>Actions</th>
+			}
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@request.Id</td>
+                <td>@(request.RequestingUser?.FullName ?? "Unknown")</td> <!-- adjust per your model -->
+                <td>@request.Status</td>
+                <td>@request.SubmissionDate.ToShortDateString()</td> <!-- if you have a created date -->
+                <td>@(request.InterviewDate?.ToString("g") ?? "-")</td>
+                <td>@(string.IsNullOrEmpty(request.Notes) ? "-" : request.Notes)</td>
+                <td>@(request.DecisionDate.HasValue ? request.DecisionDate :"-")</td>
+
+                @if (User.IsInRole("ClubAdmin"))
+                {
+                    <td>
+                        <a asp-action="DisplayRequestsInDetails" asp-route-Id="@request.Id" class="btn btn-info btn-sm">Details</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

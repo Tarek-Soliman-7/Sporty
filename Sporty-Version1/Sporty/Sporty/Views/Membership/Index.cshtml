@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Membership>
+
+<style>
+    a.create-btn {
+        display: inline-block;
+        background-color: #2962FF;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+        a.create-btn:hover {
+            background-color: #0039CB;
+        }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #2D3748;
+        color: #A0AEC0;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+</style>
+
+<a asp-action="Create" class="create-btn">Add New Membership</a>
+
+<h2 class="mb-4">Membership List</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Add New Membership</a>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Branch</th>
+            <th>Join Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in Model)
+        {
+            <tr>
+                <td>@member.User.FullName</td>
+                <td>@member.User.Email</td>
+                <td>@member.Branch.Name</td>
+                <td>@member.StartDate.ToShortDateString()</td>
+                <td>@member.EndDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
